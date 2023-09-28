@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Implementación de la interfaz de conexión a PostgreSQL
@@ -78,7 +80,10 @@ public class ConexionPostgresqlImplementacion implements ConexionPostgresqlInter
 			
 			return stringConfiguracion;
 			
-		} catch (Exception e) {
+		} catch (FileNotFoundException e) {
+			System.out.println("[ERROR-ConexionPostgresqlImplementacion-configuracionConexion] - Error al acceder al fichero propiedades de conexion.");
+			return null;
+		} catch (IOException e) {
 			System.out.println("[ERROR-ConexionPostgresqlImplementacion-configuracionConexion] - Error al acceder al fichero propiedades de conexion.");
 			return null;
 		}
