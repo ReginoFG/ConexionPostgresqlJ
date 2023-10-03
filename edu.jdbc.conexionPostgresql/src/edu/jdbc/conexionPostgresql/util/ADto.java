@@ -37,7 +37,7 @@ public class ADto {
 			System.out.println("[INFORMACIÓN-ADto-resultsALibrosDto] Número libros: "+i);
 			
 		} catch (SQLException e) {
-			System.out.println("[ERROR-ADto-resultsALibrosDto] Error al pasar el result set a lista de LibroDto" + e);
+			System.err.println("[ERROR-ADto-resultsALibrosDto] Error al pasar el result set a lista de LibroDto" + e);
 		}
 		
 		return listaLibros;

@@ -37,7 +37,7 @@ public class Inicio {
 			}	
 			
 		} catch (Exception e) {
-			System.out.println("[ERROR-Main] Se ha producido un error al ejecutar la aplicación: " + e);
+			System.err.println("[ERROR-Main] Se ha producido un error al ejecutar la aplicación: " + e);
 		}
 		
 	

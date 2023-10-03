@@ -42,8 +42,7 @@ public class ConsultasPostgresqlImplementacion implements ConsultasPostgresqlInt
 			
 		} catch (SQLException e) {
 			
-			System.out.println("[ERROR-ConsultasPostgresqlImplementacion-seleccionaTodosLibros] Error generando o ejecutando la declaracionSQL: " + e);
-			return listaLibros;
+			System.err.println("[ERROR-ConsultasPostgresqlImplementacion-seleccionaTodosLibros] Error generando o ejecutando la declaracionSQL: " + e);
 			
 		}
 		return listaLibros;

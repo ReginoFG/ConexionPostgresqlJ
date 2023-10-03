@@ -34,59 +34,57 @@ public class ConexionPostgresqlImplementacion implements ConexionPostgresqlInter
 					conexion = null;
 				}
 				System.out.println(esValida ? "[INFORMACIÓN-ConexionPostgresqlImplementacion-generaConexion] Conexión a PostgreSQL válida" : "[ERROR-ConexionPostgresqlImplementacion-generaConexion] Conexión a PostgreSQL no válida");
-	            return conexion;
 	            
 			} catch (ClassNotFoundException cnfe) {
-				System.out.println("[ERROR-ConexionPostgresqlImplementacion-generaConexion] Error en registro driver PostgreSQL: " + cnfe);
-				return conexion = null;
+				System.err.println("[ERROR-ConexionPostgresqlImplementacion-generaConexion] Error en registro driver PostgreSQL: " + cnfe);
+				conexion = null;
 			} catch (SQLException jsqle) {
-				System.out.println("[ERROR-ConexionPostgresqlImplementacion-generaConexion] Error en conexión a PostgreSQL (" + parametrosConexion[0] + "): " + jsqle);
-				return conexion = null;
+				System.err.println("[ERROR-ConexionPostgresqlImplementacion-generaConexion] Error en conexión a PostgreSQL (" + parametrosConexion[0] + "): " + jsqle);
+				conexion = null;
 			}
 			
 		}else {
 			System.out.println("[ERROR-ConexionPostgresqlImplementacion-generaConexion] Los parametros de conexion no se han establecido correctamente");	
-			return conexion;
+			conexion = null;
 		}
-		
+		return conexion;
 	}
 
 	
 	/**
-	 * Método configura los parámetros de la conexión a PostgreSQL a partir del .properties
-	 * 220923 - rfg
-	 * @param user
-	 * @param pass
-	 * @param port
-	 * @param host
-	 * @param db
-	 * return parámetros para abrir la conexión
+	 * Método configura los parámetros de la conexión de conexion_postgresql.properties
+	 * 221023 - rfg
+	 * return ventor de string con: url, user, pass
 	 */
 	private String[] configuracionConexion() {
 		
-		String user="", pass="", port="", host="", db="", url="";	
+		String user="", pass="", port="", host="", db="", url="";
+		String[] stringConfiguracion = {"","",""};
 		
-		Properties propiedadesConexionPostgresql = new Properties();
+		Properties propiedadesConexion = new Properties();
 		try {
-			//propiedadesConexionPostgresql.load(getClass().getResourceAsStream("conexion_postgresql.properties"));
-			propiedadesConexionPostgresql.load(new FileInputStream(new File("C:\\Users\\Trabajo\\dws-workspace\\edu.jdbc.conexionPostgresql\\src\\edu\\jdbc\\conexionPostgresql\\util\\conexion_postgresql.properties")));
-			user = propiedadesConexionPostgresql.getProperty("user");
-			pass = propiedadesConexionPostgresql.getProperty("pass");
-			port = propiedadesConexionPostgresql.getProperty("port");
-			host = propiedadesConexionPostgresql.getProperty("host");
-			db = propiedadesConexionPostgresql.getProperty("db");
+			propiedadesConexion.load(new FileInputStream(new File("C:\\Users\\Trabajo\\dws-workspace\\edu.jdbc.crud\\src\\edu\\jdbc\\crud\\util\\conexion_postgresql.properties")));
+			user = propiedadesConexion.getProperty("user");
+			pass = propiedadesConexion.getProperty("pass");
+			port = propiedadesConexion.getProperty("port");
+			host = propiedadesConexion.getProperty("host");
+			db = propiedadesConexion.getProperty("db");
 			url = "jdbc:postgresql://" + host + ":" + port + "/" + db;
-			String[] stringConfiguracion = {url,user,pass};
-			
-			return stringConfiguracion;
-			
+			stringConfiguracion[0] = url;
+			stringConfiguracion[1] = user;
+			stringConfiguracion[2] = pass;
 		} catch (FileNotFoundException e) {
-			System.out.println("[ERROR-ConexionPostgresqlImplementacion-configuracionConexion] - Error al acceder al fichero propiedades de conexion.");
-			return null;
+			System.err.println("[ERROR-ConexionPostgresqlImplementacion-configuracionConexion] - Error al acceder al fichero propiedades de conexion.");
+			stringConfiguracion[0] = "";
+			stringConfiguracion[1] = "";
+			stringConfiguracion[2] = "";
 		} catch (IOException e) {
-			System.out.println("[ERROR-ConexionPostgresqlImplementacion-configuracionConexion] - Error al acceder al fichero propiedades de conexion.");
-			return null;
+			System.err.println("[ERROR-ConexionPostgresqlImplementacion-configuracionConexion] - Error al acceder al fichero propiedades de conexion.");
+			stringConfiguracion[0] = "";
+			stringConfiguracion[1] = "";
+			stringConfiguracion[2] = "";
 		}
 
+		return stringConfiguracion;
 	}
 }
